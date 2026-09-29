@@ -6,3 +6,7 @@ diabetes
 iron
 walking
 electricity
+dyslipidemia
+calcium
+strength
+heating

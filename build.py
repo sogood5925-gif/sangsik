@@ -1,6 +1,25 @@
 #!/usr/bin/env python3
 """posts/*.html 을 src/shell.html 에 끼워 index.html(공개용)과 .build/artifact.html(아티팩트용)을 만든다."""
 import os, re, sys
+from html.parser import HTMLParser
+
+VOID = {'br', 'hr', 'img', 'input', 'meta', 'link', 'col', 'wbr'}
+
+class TagCheck(HTMLParser):
+    """열고 닫는 태그 짝이 맞는지 본다."""
+    def __init__(self):
+        super().__init__(); self.stack = []; self.errs = []
+    def handle_starttag(self, tag, attrs):
+        if tag not in VOID: self.stack.append((tag, self.getpos()[0]))
+    def handle_endtag(self, tag):
+        if tag in VOID: return
+        if not self.stack or self.stack[-1][0] != tag:
+            top = self.stack[-1] if self.stack else ('없음', 0)
+            self.errs.append(f'{self.getpos()[0]}행 </{tag}> (열린 태그: <{top[0]}> {top[1]}행)')
+            if any(t == tag for t, _ in self.stack):
+                while self.stack and self.stack.pop()[0] != tag: pass
+        else: self.stack.pop()
+
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CATS = {'life', 'dis', 'nut', 'hea'}
@@ -26,6 +45,9 @@ def main():
         if attrs.get('data-id') != pid: errors.append(f'{pid}: data-id 불일치')
         if attrs.get('data-cat') not in CATS: errors.append(f'{pid}: 카테고리 오류')
         else: counts[attrs['data-cat']] += 1
+        tc = TagCheck(); tc.feed(src); tc.close()
+        errors += [f'{pid}: {e}' for e in tc.errs]
+        errors += [f'{pid}: <{t}> {n}행이 닫히지 않음' for t, n in tc.stack]
         chunks.append(src)
     if errors:
         sys.exit('\n'.join(errors))
