@@ -24,6 +24,7 @@
   - 없어진 글의 폴더는 빌드가 지운다. 글 id 는 `posts`, `src` 같은 폴더 이름과 겹치면 안 된다.
   글을 추가하거나 고친 뒤에는 반드시 빌드해서 생성된 파일을 모두 함께 커밋한다.
 - 예전 주소 `#post-<id>` 로 들어오면 첫 화면이 `<id>/` 로 옮겨 준다.
+- `google33d20588473585cf.html` — 구글 서치 콘솔 소유 확인 파일. 지우면 확인이 풀린다.
 - 아티팩트 주소: https://claude.ai/artifact/177b1rbKTWKaL9jiVGnnUt (`.build/artifact.html` 을 이 url 로 게시)
 
 ## 글 머리 속성 (모두 필수)
