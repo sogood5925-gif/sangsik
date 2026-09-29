@@ -14,9 +14,16 @@
 ## 구조
 - `posts/<id>.html` — 글 한 편. `<template>` 한 개로 감싼다.
 - `posts/order.txt` — 글 순서(오래된 글이 위). 새 글은 맨 아래에 추가.
-- `src/shell.html` — 블로그 틀(메뉴, 목록, 글 보기, 사이드바). `<!-- POSTS -->` 자리에 글이 들어간다.
-- `python3 build.py` — 검사 후 `index.html`(공개용 전체 문서)과 `.build/artifact.html`(아티팩트용) 생성.
-  글을 추가하거나 고친 뒤에는 반드시 빌드해서 `index.html` 을 함께 커밋한다.
+- 공개 사이트는 글마다 개별 주소를 갖는 여러 페이지다: `https://sogood5925-gif.github.io/sangsik/<id>/`.
+  - `src/page.html` — 페이지 틀, `src/site.js` — 공개 사이트 스크립트(목록 거르기·검색·방문자 수·댓글·공감).
+  - CSS 는 `src/shell.html` 의 `<style>` 을 함께 쓴다. 한 곳만 고치면 두 쪽에 반영된다.
+- `src/shell.html` — 아티팩트용 한 파일짜리 블로그(해시 주소). `<!-- POSTS -->` 자리에 글이 들어간다.
+- `python3 build.py` — 검사 후 다음을 만든다. 모두 생성물이므로 손으로 고치지 않는다.
+  - 저장소 맨 위: `index.html`(첫 화면), `<id>/index.html`(글 100개), `404.html`, `sitemap.xml`, `rss.xml`, `search.json`
+  - `.build/artifact.html`(아티팩트용)
+  - 없어진 글의 폴더는 빌드가 지운다. 글 id 는 `posts`, `src` 같은 폴더 이름과 겹치면 안 된다.
+  글을 추가하거나 고친 뒤에는 반드시 빌드해서 생성된 파일을 모두 함께 커밋한다.
+- 예전 주소 `#post-<id>` 로 들어오면 첫 화면이 `<id>/` 로 옮겨 준다.
 - 아티팩트 주소: https://claude.ai/artifact/177b1rbKTWKaL9jiVGnnUt (`.build/artifact.html` 을 이 url 로 게시)
 
 ## 글 머리 속성 (모두 필수)

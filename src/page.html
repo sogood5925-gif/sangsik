@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="generator" content="sangsik-build">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESC}}">
+<link rel="canonical" href="{{URL}}">
+<meta property="og:type" content="{{OGTYPE}}">
+<meta property="og:site_name" content="생활 상식첩">
+<meta property="og:title" content="{{OGTITLE}}">
+<meta property="og:description" content="{{DESC}}">
+<meta property="og:url" content="{{URL}}">
+<meta property="og:locale" content="ko_KR">
+<link rel="alternate" type="application/rss+xml" title="생활 상식첩" href="{{ROOT}}rss.xml">
+{{HEAD}}<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Nanum+Myeongjo:wght@700;800&display=swap">
+<style>{{CSS}}</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    {{BLOGNAME}}
+    <p class="blogdesc">한 주제를 끝까지 파고드는 생활·건강 상식 블로그</p>
+  </header>
+  <nav class="menu" aria-label="카테고리">{{MENU}}</nav>
+
+  <div class="layout">
+    <main id="main" class="panel">
+{{MAIN}}
+    </main>
+    <aside class="side">
+{{SIDE}}
+    </aside>
+  </div>
+
+  <p class="foot">생활 상식첩의 건강 관련 글은 일반적인 정보이며 진단이나 치료를 대신하지 않습니다.<br>증상이 있거나 약을 복용 중이라면 의사·약사와 상의하세요. 응급 상황은 119.</p>
+</div>
+<script>
+{{JS}}
+</script>
+</body>
+</html>
