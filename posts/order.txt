@@ -70,3 +70,7 @@ dementia
 fiber
 painkillers
 fine-dust
+depression
+sugar
+cpr
+drinking-water
