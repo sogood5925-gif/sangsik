@@ -1,7 +1,7 @@
 # 생활 상식첩
 
 생활정보·질병·영양소·건강상식을 한 주제씩 깊이 있게 다루는 블로그형 정적 사이트.
-100편(카테고리당 25편) 작성 완료. 진행 상황은 `TOPICS.md`.
+200편(카테고리당 50편) 작성 완료. 진행 상황은 `TOPICS.md`.
 
 ## 공개
 - GitHub Pages: 저장소를 Public 으로 바꾸고 Settings → Pages → Branch 를 이 브랜치의 `/ (root)` 로 지정하면 `index.html` 이 https://sogood5925-gif.github.io/sangsik/ 에 공개된다. `.nojekyll` 이 있어 그대로 서빙된다.
@@ -19,7 +19,7 @@
   - CSS 는 `src/shell.html` 의 `<style>` 을 함께 쓴다. 한 곳만 고치면 두 쪽에 반영된다.
 - `src/shell.html` — 아티팩트용 한 파일짜리 블로그(해시 주소). `<!-- POSTS -->` 자리에 글이 들어간다.
 - `python3 build.py` — 검사 후 다음을 만든다. 모두 생성물이므로 손으로 고치지 않는다.
-  - 저장소 맨 위: `index.html`(첫 화면), `<id>/index.html`(글 100개), `404.html`, `sitemap.xml`, `rss.xml`, `search.json`
+  - 저장소 맨 위: `index.html`(첫 화면), `<id>/index.html`(글마다 하나), `404.html`, `sitemap.xml`, `rss.xml`, `search.json`
   - `.build/artifact.html`(아티팩트용)
   - 없어진 글의 폴더는 빌드가 지운다. 글 id 는 `posts`, `src` 같은 폴더 이름과 겹치면 안 된다.
   글을 추가하거나 고친 뒤에는 반드시 빌드해서 생성된 파일을 모두 함께 커밋한다.
