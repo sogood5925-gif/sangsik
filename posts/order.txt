@@ -34,3 +34,7 @@ shingles
 vitamin-k
 checkup
 kitchen-hygiene
+flu
+magnesium
+weight
+food-poisoning
