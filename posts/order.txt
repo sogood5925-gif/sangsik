@@ -22,3 +22,7 @@ thyroid
 folate
 teeth
 detergent
+gerd
+vitamin-a
+handwashing
+produce-wash
