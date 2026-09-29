@@ -38,3 +38,7 @@ flu
 magnesium
 weight
 food-poisoning
+pneumonia
+zinc
+fasting
+gas-safety
