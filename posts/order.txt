@@ -30,3 +30,7 @@ ibs
 vitamin-e
 vaccines
 food-label
+shingles
+vitamin-k
+checkup
+kitchen-hygiene
