@@ -4,7 +4,7 @@
 100편(카테고리당 25편) 작성 완료. 진행 상황은 `TOPICS.md`.
 
 ## 공개
-- GitHub Pages: 저장소를 Public 으로 바꾸고 Settings → Pages → Branch 를 이 브랜치의 `/ (root)` 로 지정하면 `index.html` 이 https://sogood5925-gif.github.io/claude/ 에 공개된다. `.nojekyll` 이 있어 그대로 서빙된다.
+- GitHub Pages: 저장소를 Public 으로 바꾸고 Settings → Pages → Branch 를 이 브랜치의 `/ (root)` 로 지정하면 `index.html` 이 https://sogood5925-gif.github.io/sangsik/ 에 공개된다. `.nojekyll` 이 있어 그대로 서빙된다.
 - 아티팩트: 페이지의 공유 메뉴에서 '링크가 있는 모든 사람'으로 바꾸면 공개된다.
 - 댓글: utterances(GitHub Issues). 글마다 `post-<id>` 제목의 이슈에 댓글이 쌓인다. 쓰는 사람은 GitHub 로그인이 필요하다.
   저장소가 Public 이고 https://github.com/apps/utterances 앱이 이 저장소에 설치돼 있어야 동작한다. 삭제·관리는 저장소 Issues 에서 한다.
