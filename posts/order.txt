@@ -82,3 +82,7 @@ colon-cancer
 water
 heat-illness
 moving
+stomach-cancer
+caffeine
+cold-illness
+pet-safety
