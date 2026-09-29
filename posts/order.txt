@@ -50,3 +50,7 @@ gout
 sodium
 smoking
 disaster
+headache
+iodine
+stress
+lease
