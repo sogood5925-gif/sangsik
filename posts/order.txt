@@ -78,3 +78,7 @@ panic
 fat
 first-aid
 car-care
+colon-cancer
+water
+heat-illness
+moving
