@@ -58,3 +58,7 @@ stroke
 selenium
 sunscreen
 phishing
+heart-attack
+omega3
+medication
+privacy
