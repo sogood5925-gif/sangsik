@@ -9,6 +9,7 @@
 <meta property="og:title" content="생활 상식첩">
 <meta property="og:description" content="생활정보, 질병, 영양소, 건강상식 100편을 한 주제씩 깊이 있게 정리한 블로그">
 <meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://sogood5925-gif.github.io/claude/">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Nanum+Myeongjo:wght@700;800&display=swap">
 <style>
 /* 레이아웃: 블로그 머리(제목·메뉴) 아래, 넓은 화면은 본문 + 오른쪽 사이드바, 좁은 화면은 한 줄로 쌓기 */
@@ -169,6 +170,13 @@ button{font:inherit;color:inherit}
 .pager button:hover{border-color:var(--line)}
 .pager button[aria-current="page"]{border-color:var(--accent);color:var(--accent);font-weight:800}
 .nohit{padding:40px 20px;text-align:center;color:var(--ink-3);margin:0}
+.comments{border-top:1px solid var(--line);padding:22px clamp(18px,4vw,48px) 26px}
+.comments h3{margin:0 0 4px;font-size:1rem}
+.comments .cnote{margin:0 0 14px;font-size:.85rem;color:var(--ink-3)}
+.comments .cnote a{color:var(--accent)}
+.visits{display:grid;gap:10px}
+.visits img{display:block;max-width:100%;height:auto}
+.visits p{margin:0;font-size:.8rem;color:var(--ink-3)}
 .related{border-top:1px solid var(--line);padding:18px clamp(18px,4vw,48px)}
 .related h3{margin:0 0 8px;font-size:.92rem}
 .related ul{list-style:none;margin:0;padding:0}
@@ -194,6 +202,11 @@ button{font:inherit;color:inherit}
         <div class="avatar" aria-hidden="true">상</div>
         <b>상식첩 편집실</b>
         <p>검색하면 나오는 한 줄짜리 상식 말고, 왜 그런지까지 알 수 있는 글을 씁니다. 공공기관과 학회 자료를 기준으로 정리해요.</p>
+      </section>
+      <section class="panel visits" id="visits" hidden>
+        <h3>방문자</h3>
+        <img id="visit-badge" alt="누적 방문 수" width="160" height="20">
+        <p>이 페이지가 열린 누적 횟수예요.</p>
       </section>
       <section class="panel">
         <h3>블로그 검색</h3>
@@ -12098,6 +12111,9 @@ button{font:inherit;color:inherit}
 (function(){
   var CAT={life:'생활정보',dis:'질병',nut:'영양소',hea:'건강상식'};
   var ORDER=['life','dis','nut','hea'], PER=10;
+  /* 공개 사이트 설정: 댓글(utterances, GitHub 이슈)과 방문자 수는 GitHub Pages 에서만 켜요 */
+  var SITE={url:'https://sogood5925-gif.github.io/claude/', repo:'sogood5925-gif/claude', counterId:'sogood5925-gif.github.io.claude'};
+  var ON_SITE=/(^|\.)github\.io$/.test(location.hostname);
   /* 최신 글이 위로: 빌드 순서의 역순 */
   var POSTS=[].map.call(document.querySelectorAll('template[data-id]'),function(t){
     var th=(t.dataset.thumb||'').split('|');
@@ -12141,6 +12157,36 @@ button{font:inherit;color:inherit}
     if(location.hash) history.replaceState(null,'',location.pathname+location.search);
     list(null,hits,'‘'+q.value.trim()+'’ 검색 결과');window.scrollTo(0,0);}
   document.getElementById('searchform').addEventListener('submit',function(e){e.preventDefault();search();});
+
+  /* 방문자 수 배지: 사이트를 열 때 한 번 불러와요. 불러오지 못하면 칸을 숨겨요 */
+  if(ON_SITE){
+    var vb=document.getElementById('visit-badge'), vs=document.getElementById('visits');
+    vb.onload=function(){vs.hidden=false;};
+    vb.onerror=function(){vs.hidden=true;};
+    vb.src='https://visitor-badge.laobi.icu/badge?page_id='+encodeURIComponent(SITE.counterId)+'&left_text='+encodeURIComponent('누적 방문')+'&left_color=%2356605B&right_color=%231F8A5B';
+  }
+
+  function comments(p){
+    var sec=el('section','comments');sec.setAttribute('aria-label','댓글');
+    sec.appendChild(el('h3',null,'댓글'));
+    var note=el('p','cnote');
+    if(ON_SITE){
+      note.textContent='GitHub 계정으로 로그인하면 댓글을 남길 수 있어요. 다른 분의 건강 상태에 대한 진단이나 처방은 답해 드리기 어려워요.';
+      sec.appendChild(note);
+      var box=el('div');sec.appendChild(box);
+      var sc=document.createElement('script');
+      sc.src='https://utteranc.es/client.js';sc.async=true;sc.setAttribute('crossorigin','anonymous');
+      sc.setAttribute('repo',SITE.repo);
+      sc.setAttribute('issue-term','post-'+p.id);
+      sc.setAttribute('theme','preferred-color-scheme');
+      box.appendChild(sc);
+    }else{
+      note.appendChild(document.createTextNode('댓글은 공개 사이트에서 남길 수 있어요. '));
+      var a=el('a',null,'이 글을 공개 사이트에서 열기');a.href=SITE.url+'#post-'+p.id;a.target='_blank';a.rel='noopener';
+      note.appendChild(a);sec.appendChild(note);
+    }
+    return sec;
+  }
 
   function thumb(p){var d=el('div','thumb t-'+p.cat);d.setAttribute('aria-hidden','true');
     d.appendChild(el('b',null,p.big));d.appendChild(el('small',null,p.small));return d;}
@@ -12191,6 +12237,7 @@ button{font:inherit;color:inherit}
     function dl(){var on=get(key)==='1';lk.textContent=on?'♥ 공감했어요':'♡ 공감하기';lk.setAttribute('aria-pressed',on?'true':'false');}
     dl();act.appendChild(lk);a.appendChild(act);
     main.appendChild(a);
+    main.appendChild(comments(p));
     var rel=inCat(p.cat).filter(function(x){return x!==p}).slice(0,5);
     if(rel.length){var rb=el('section','related');rb.appendChild(el('h3',null,'‘'+CAT[p.cat]+'’ 카테고리의 다른 글'));
       var ru=el('ul');rel.forEach(function(x){var l=el('li');l.appendChild(btn(null,x.title,function(){go('post-'+x.id)}));ru.appendChild(l);});
