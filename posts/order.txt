@@ -54,3 +54,7 @@ headache
 iodine
 stress
 lease
+stroke
+selenium
+sunscreen
+phishing
