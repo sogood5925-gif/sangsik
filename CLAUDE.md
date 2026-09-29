@@ -8,7 +8,7 @@
 - 아티팩트: 페이지의 공유 메뉴에서 '링크가 있는 모든 사람'으로 바꾸면 공개된다.
 - 댓글: utterances(GitHub Issues). 글마다 `post-<id>` 제목의 이슈에 댓글이 쌓인다. 쓰는 사람은 GitHub 로그인이 필요하다.
   저장소가 Public 이고 https://github.com/apps/utterances 앱이 이 저장소에 설치돼 있어야 동작한다. 삭제·관리는 저장소 Issues 에서 한다.
-- 방문자 카운터: 사이드바 '방문자' 패널, visitor-badge.laobi.icu 배지 이미지(`SITE.counterId`). 이미지를 못 불러오면 패널이 숨는다.
+- 방문자 카운터: 사이드바 '방문자' 패널에 오늘·누적 표시. Abacus 카운터 API(`SITE.counter`, 키 `sangsik-total`, `sangsik-d-YYYYMMDD`). 브라우저당 하루 1회(localStorage) 센다. 불러오지 못하면 패널이 숨는다.
 - 댓글과 카운터는 `src/shell.html` 의 `SITE` 설정을 쓰고 `*.github.io` 에서만 켜진다. 아티팩트에서는 CSP 때문에 외부 스크립트가 막혀 댓글 자리에 공개 사이트 링크만 보인다.
 
 ## 구조

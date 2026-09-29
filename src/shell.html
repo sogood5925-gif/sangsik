@@ -174,9 +174,9 @@ button{font:inherit;color:inherit}
 .comments h3{margin:0 0 4px;font-size:1rem}
 .comments .cnote{margin:0 0 14px;font-size:.85rem;color:var(--ink-3)}
 .comments .cnote a{color:var(--accent)}
-.visits{display:grid;gap:10px}
-.visits img{display:block;max-width:100%;height:auto}
-.visits p{margin:0;font-size:.8rem;color:var(--ink-3)}
+.visits dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:.85rem}
+.visits dt{color:var(--ink-3)}
+.visits dd{margin:0;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
 .related{border-top:1px solid var(--line);padding:18px clamp(18px,4vw,48px)}
 .related h3{margin:0 0 8px;font-size:.92rem}
 .related ul{list-style:none;margin:0;padding:0}
@@ -205,8 +205,7 @@ button{font:inherit;color:inherit}
       </section>
       <section class="panel visits" id="visits" hidden>
         <h3>방문자</h3>
-        <img id="visit-badge" alt="누적 방문 수" width="160" height="20">
-        <p>이 페이지가 열린 누적 횟수예요.</p>
+        <dl><dt>오늘</dt><dd id="v-today">-</dd><dt>누적</dt><dd id="v-total">-</dd></dl>
       </section>
       <section class="panel">
         <h3>블로그 검색</h3>
@@ -240,7 +239,7 @@ button{font:inherit;color:inherit}
   var CAT={life:'생활정보',dis:'질병',nut:'영양소',hea:'건강상식'};
   var ORDER=['life','dis','nut','hea'], PER=10;
   /* 공개 사이트 설정: 댓글(utterances, GitHub 이슈)과 방문자 수는 GitHub Pages 에서만 켜요 */
-  var SITE={url:'https://sogood5925-gif.github.io/sangsik/', repo:'sogood5925-gif/sangsik', counterId:'sogood5925-gif.github.io.sangsik'};
+  var SITE={url:'https://sogood5925-gif.github.io/sangsik/', repo:'sogood5925-gif/sangsik', counter:'https://abacus.jasoncameron.dev/', counterNs:'sogood5925-gif.github.io'};
   var ON_SITE=/(^|\.)github\.io$/.test(location.hostname);
   /* 최신 글이 위로: 빌드 순서의 역순 */
   var POSTS=[].map.call(document.querySelectorAll('template[data-id]'),function(t){
@@ -286,12 +285,19 @@ button{font:inherit;color:inherit}
     list(null,hits,'‘'+q.value.trim()+'’ 검색 결과');window.scrollTo(0,0);}
   document.getElementById('searchform').addEventListener('submit',function(e){e.preventDefault();search();});
 
-  /* 방문자 수 배지: 사이트를 열 때 한 번 불러와요. 불러오지 못하면 칸을 숨겨요 */
+  /* 방문자 수: 한 브라우저는 하루에 한 번만 세요(한국 시간 기준). 불러오지 못하면 칸을 숨겨요 */
   if(ON_SITE){
-    var vb=document.getElementById('visit-badge'), vs=document.getElementById('visits');
-    vb.onload=function(){vs.hidden=false;};
-    vb.onerror=function(){vs.hidden=true;};
-    vb.src='https://visitor-badge.laobi.icu/badge?page_id='+encodeURIComponent(SITE.counterId)+'&left_text='+encodeURIComponent('누적 방문')+'&left_color=%2356605B&right_color=%231F8A5B';
+    var day=new Date(Date.now()+9*36e5).toISOString().slice(0,10).replace(/-/g,''), seen='';
+    try{seen=localStorage.getItem('sangsik-visit')||'';}catch(e){}
+    var verb=seen===day?'get':'hit';
+    var num=function(k){return fetch(SITE.counter+verb+'/'+SITE.counterNs+'/sangsik-'+k)
+      .then(function(r){if(r.status===404)return 0; if(!r.ok)throw r.status; return r.json().then(function(j){return j.value;});});};
+    Promise.all([num('d-'+day),num('total')]).then(function(v){
+      document.getElementById('v-today').textContent=Number(v[0]).toLocaleString('ko-KR');
+      document.getElementById('v-total').textContent=Number(v[1]).toLocaleString('ko-KR');
+      document.getElementById('visits').hidden=false;
+      try{localStorage.setItem('sangsik-visit',day);}catch(e){}
+    }).catch(function(){});
   }
 
   function comments(p){
