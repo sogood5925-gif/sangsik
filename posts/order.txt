@@ -2,3 +2,7 @@ fridge
 hypertension
 vitamin-d
 sleep
+diabetes
+iron
+walking
+electricity

@@ -4,7 +4,7 @@
 
 ## 생활정보 (life)
 - [x] 냉장고 제대로 쓰는 법 (fridge)
-- [ ] 전기요금 누진제와 절약법 (electricity)
+- [x] 전기요금 누진제와 절약법 (electricity)
 - [ ] 겨울 난방비 줄이는 법 (heating)
 - [ ] 곰팡이와 결로 잡는 법 (mold)
 - [ ] 세탁 기호 읽는 법과 빨래 냄새 (laundry)
@@ -31,7 +31,7 @@
 
 ## 질병 (dis)
 - [x] 고혈압 (hypertension)
-- [ ] 당뇨병 (diabetes)
+- [x] 당뇨병 (diabetes)
 - [ ] 이상지질혈증 (dyslipidemia)
 - [ ] 지방간 (fatty-liver)
 - [ ] 골다공증 (osteoporosis)
@@ -65,7 +65,7 @@
 - [ ] 비타민 E (vitamin-e)
 - [ ] 비타민 K (vitamin-k)
 - [ ] 칼슘 (calcium)
-- [ ] 철분 (iron)
+- [x] 철분 (iron)
 - [ ] 마그네슘 (magnesium)
 - [ ] 아연 (zinc)
 - [ ] 칼륨 (potassium)
@@ -85,7 +85,7 @@
 
 ## 건강상식 (hea)
 - [x] 수면 (sleep)
-- [ ] 걷기와 유산소 운동 (walking)
+- [x] 걷기와 유산소 운동 (walking)
 - [ ] 근력 운동과 근감소증 (strength)
 - [ ] 거북목과 스트레칭 (neck)
 - [ ] 눈 건강과 안구건조 (eyes)

@@ -38,6 +38,14 @@ def main():
     os.makedirs(os.path.join(ROOT, '.build'), exist_ok=True)
     open(os.path.join(ROOT, '.build/artifact.html'), 'w', encoding='utf-8').write(
         '\n'.join(l for l in page.split('\n') if not l.startswith(drop)))
+    # TOPICS.md 체크 상태를 실제 글 파일과 맞춘다
+    tp = os.path.join(ROOT, 'TOPICS.md')
+    if os.path.exists(tp):
+        done = set(order)
+        t = re.sub(r'- \[[ x]\] (.*?) \(([a-z0-9-]+)\)',
+                   lambda m: f'- [{"x" if m.group(2) in done else " "}] {m.group(1)} ({m.group(2)})',
+                   open(tp, encoding='utf-8').read())
+        open(tp, 'w', encoding='utf-8').write(t)
     print(f'글 {len(chunks)}편 · 생활정보 {counts["life"]} · 질병 {counts["dis"]} · '
           f'영양소 {counts["nut"]} · 건강상식 {counts["hea"]} · {len(page)//1024}KB')
 
