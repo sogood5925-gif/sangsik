@@ -98,3 +98,13 @@ disc
 collagen
 hearing
 home-safety
+recycling
+expiry-date
+freezing
+leftovers
+cooking-temp
+cookware
+microwave-container
+drain
+electric-safety
+battery-safety
