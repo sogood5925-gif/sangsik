@@ -25,6 +25,7 @@
   글을 추가하거나 고친 뒤에는 반드시 빌드해서 생성된 파일을 모두 함께 커밋한다.
 - 예전 주소 `#post-<id>` 로 들어오면 첫 화면이 `<id>/` 로 옮겨 준다.
 - `google33d20588473585cf.html` — 구글 서치 콘솔 소유 확인 파일. 지우면 확인이 풀린다.
+- 네이버 서치어드바이저는 호스트 단위라 `sogood5925-gif/sogood5925-gif.github.io` 저장소(main)의 첫 페이지와 `naver….html` 파일로 소유 확인했다. 그 저장소의 확인 태그·파일과 `robots.txt`(사이트맵 위치)를 지우지 않는다.
 - 아티팩트 주소: https://claude.ai/artifact/177b1rbKTWKaL9jiVGnnUt (`.build/artifact.html` 을 이 url 로 게시)
 
 ## 글 머리 속성 (모두 필수)
