@@ -25,7 +25,7 @@
 - [x] 자동차 계절 점검과 타이어 공기압 (car-care)
 - [x] 이사 체크리스트 (moving)
 - [x] 반려동물과 사는 집의 안전 (pet-safety)
-- [ ] 해외여행 상비약과 건강 준비 (travel-health)
+- [x] 해외여행 상비약과 건강 준비 (travel-health)
 - [ ] 집먼지진드기와 침구 관리 (dust-mite)
 - [ ] 아이와 노인이 있는 집 안전 (home-safety)
 
@@ -52,7 +52,7 @@
 - [x] 공황장애 (panic)
 - [x] 대장암과 대장내시경 (colon-cancer)
 - [x] 위암과 헬리코박터 (stomach-cancer)
-- [ ] 아토피 피부염 (atopic)
+- [x] 아토피 피부염 (atopic)
 - [ ] 알레르기 비염 (rhinitis)
 - [ ] 허리 디스크와 목 디스크 (disc)
 
@@ -79,7 +79,7 @@
 - [x] 지방: 포화지방·트랜스지방·콜레스테롤 (fat)
 - [x] 물과 수분 (water)
 - [x] 카페인 (caffeine)
-- [ ] 프로바이오틱스 (probiotics)
+- [x] 프로바이오틱스 (probiotics)
 - [ ] 루테인 (lutein)
 - [ ] 콜라겐 (collagen)
 
@@ -106,6 +106,6 @@
 - [x] 기도폐쇄·화상·코피 응급처치 (first-aid)
 - [x] 온열질환과 열사병 (heat-illness)
 - [x] 한랭질환과 저체온증 (cold-illness)
-- [ ] 바른 자세와 허리 건강 (posture)
+- [x] 바른 자세와 허리 건강 (posture)
 - [ ] 장 건강과 배변 습관 (bowel)
 - [ ] 청력 보호 (hearing)
