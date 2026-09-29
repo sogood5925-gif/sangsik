@@ -46,3 +46,7 @@ cystitis
 potassium
 alcohol
 fire
+gout
+sodium
+smoking
+disaster
