@@ -26,3 +26,7 @@ gerd
 vitamin-a
 handwashing
 produce-wash
+ibs
+vitamin-e
+vaccines
+food-label
