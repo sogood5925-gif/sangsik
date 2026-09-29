@@ -27,7 +27,7 @@
 - [x] 반려동물과 사는 집의 안전 (pet-safety)
 - [x] 해외여행 상비약과 건강 준비 (travel-health)
 - [x] 집먼지진드기와 침구 관리 (dust-mite)
-- [ ] 아이와 노인이 있는 집 안전 (home-safety)
+- [x] 아이와 노인이 있는 집 안전 (home-safety)
 
 ## 질병 (dis)
 - [x] 고혈압 (hypertension)
@@ -54,7 +54,7 @@
 - [x] 위암과 헬리코박터 (stomach-cancer)
 - [x] 아토피 피부염 (atopic)
 - [x] 알레르기 비염 (rhinitis)
-- [ ] 허리 디스크와 목 디스크 (disc)
+- [x] 허리 디스크와 목 디스크 (disc)
 
 ## 영양소 (nut)
 - [x] 비타민 D (vitamin-d)
@@ -81,7 +81,7 @@
 - [x] 카페인 (caffeine)
 - [x] 프로바이오틱스 (probiotics)
 - [x] 루테인 (lutein)
-- [ ] 콜라겐 (collagen)
+- [x] 콜라겐 (collagen)
 
 ## 건강상식 (hea)
 - [x] 수면 (sleep)
@@ -108,4 +108,4 @@
 - [x] 한랭질환과 저체온증 (cold-illness)
 - [x] 바른 자세와 허리 건강 (posture)
 - [x] 장 건강과 배변 습관 (bowel)
-- [ ] 청력 보호 (hearing)
+- [x] 청력 보호 (hearing)
