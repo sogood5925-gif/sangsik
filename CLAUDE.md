@@ -1,7 +1,7 @@
 # 생활 상식첩
 
 생활정보·질병·영양소·건강상식을 한 주제씩 깊이 있게 다루는 블로그형 정적 사이트.
-200편(카테고리당 50편) 작성 완료. 진행 상황은 `TOPICS.md`.
+300편(카테고리당 75편) 작성 완료. 진행 상황은 `TOPICS.md`.
 
 ## 공개
 - GitHub Pages: 저장소를 Public 으로 바꾸고 Settings → Pages → Branch 를 이 브랜치의 `/ (root)` 로 지정하면 `index.html` 이 https://sogood5925-gif.github.io/sangsik/ 에 공개된다. `.nojekyll` 이 있어 그대로 서빙된다.
