@@ -79,7 +79,7 @@ def main():
           f'영양소 {counts["nut"]} · 건강상식 {counts["hea"]} · 사이트 {size//1024}KB · 아티팩트 {len(page)//1024}KB')
 
 # ---------------------------------------------------------------- 공개 사이트
-SITE = 'https://sogood5925-gif.github.io/sangsik/'
+SITE = 'https://sangsik-beta.vercel.app/'
 CAT = {'life': '생활정보', 'dis': '질병', 'nut': '영양소', 'hea': '건강상식'}
 ORDER = ['life', 'dis', 'nut', 'hea']
 KEEP = {'posts', 'src', '.build', '.git', '__pycache__', 'stats'}   # stats: 방문 통계 페이지(빌드가 만들지만 글이 아니에요)
@@ -224,7 +224,7 @@ def stats_main(plist):
 <section><h3>검색어 확인</h3>
 <p>어떤 검색어로 들어왔는지는 검색엔진이 알려 줘요.</p>
 <ul class="st-links">
-<li><a href="https://search.google.com/search-console/performance/search-analytics?resource_id=https%3A%2F%2Fsogood5925-gif.github.io%2Fsangsik%2F" target="_blank" rel="noopener">구글 서치 콘솔 → 실적(검색어·클릭 수)</a></li>
+<li><a href="https://search.google.com/search-console/performance/search-analytics?resource_id=https%3A%2F%2Fsangsik-beta.vercel.app%2F" target="_blank" rel="noopener">구글 서치 콘솔 → 실적(검색어·클릭 수)</a></li>
 <li><a href="https://searchadvisor.naver.com/console/board" target="_blank" rel="noopener">네이버 서치어드바이저 → 리포트(검색 유입)</a></li>
 </ul>
 </section>
@@ -274,12 +274,12 @@ def build_site(order, chunks, css):
                SIDE=side(posts, '../', 'cat-' + p['cat']), **common)
     # 없는 주소: GitHub Pages 가 어느 깊이에서나 보여 주므로 절대 주소로 링크한다
     render('404.html', TITLE='페이지를 찾을 수 없어요 | 생활 상식첩', DESC=E(desc), URL=SITE, OGTYPE='website',
-           OGTITLE='생활 상식첩', ROOT='/sangsik/', HEAD='<meta name="robots" content="noindex">\n',
-           BLOGNAME='<p class="blogname"><a href="/sangsik/">생활 상식첩</a></p>',
-           MENU=menu(posts, '/sangsik/', None),
+           OGTITLE='생활 상식첩', ROOT='./', HEAD='<meta name="robots" content="noindex">\n',
+           BLOGNAME='<p class="blogname"><a href="./">생활 상식첩</a></p>',
+           MENU=menu(posts, './', None),
            MAIN=('<div class="listhead"><h2>페이지를 찾을 수 없어요</h2></div>'
-                 '<p class="nohit">주소가 바뀌었거나 없는 글이에요. <a href="/sangsik/">첫 화면</a>에서 찾아보세요.</p>'),
-           SIDE=side(posts, '/sangsik/', None), **common)
+                 '<p class="nohit">주소가 바뀌었거나 없는 글이에요. <a href="./">첫 화면</a>에서 찾아보세요.</p>'),
+           SIDE=side(posts, './', None), **common)
     # 방문 통계: 검색에 노출하지 않고 메뉴에도 넣지 않는 주인용 페이지. 스크립트는 src/stats.js
     plist = json.dumps([{'id': p['id'], 't': p['title'], 'c': p['cat']} for p in posts],
                        ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')

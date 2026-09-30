@@ -1,6 +1,6 @@
 (function(){
   /* GitHub Pages와 Vercel 모두에서 댓글과 방문자 수를 사용해요. 통계 데이터 이름은 기존 값과 맞춰 양쪽 방문을 합쳐요. */
-  var SITE={url:'https://sogood5925-gif.github.io/sangsik/', repo:'sogood5925-gif/sangsik', counter:'https://abacus.jasoncameron.dev/', counterNs:'sogood5925-gif.github.io'};
+  var SITE={url:'https://sangsik-beta.vercel.app/', repo:'sogood5925-gif/sangsik', counter:'https://abacus.jasoncameron.dev/', counterNs:'sogood5925-gif.github.io'};
   var ON_SITE=location.protocol==='http:'||location.protocol==='https:';
   var CAT={life:'생활정보',dis:'질병',nut:'영양소',hea:'건강상식'}, PER=10;
   function $(id){return document.getElementById(id);}
@@ -125,7 +125,7 @@
     var q=(new URLSearchParams(location.search).get('q')||'').trim(), c=location.hash.slice(5);
     if(location.hash.indexOf('#cat-')===0 && CAT[c]){mark('cat-'+c);show(items.filter(function(li){return li.dataset.cat===c;}),CAT[c]);return;}
     if(q){
-      var t='‘'+q+'’ 검색 결과';mark(null);$('q').value=q;
+      var t='���'+q+'’ 검색 결과';mark(null);$('q').value=q;
       $('listtitle').textContent=t;$('listcount').textContent='찾는 중…';
       loadHay().then(function(h){var s=q.toLowerCase();show(items.filter(function(li){return (h[li.dataset.id]||'').indexOf(s)>=0;}),t);});
       return;
