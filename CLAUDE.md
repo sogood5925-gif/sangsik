@@ -9,13 +9,18 @@
 - 댓글: utterances(GitHub Issues). 글마다 `post-<id>` 제목의 이슈에 댓글이 쌓인다. 쓰는 사람은 GitHub 로그인이 필요하다.
   저장소가 Public 이고 https://github.com/apps/utterances 앱이 이 저장소에 설치돼 있어야 동작한다. 삭제·관리는 저장소 Issues 에서 한다.
 - 방문자 카운터: 사이드바 '방문자' 패널에 오늘·누적 표시. Abacus 카운터 API(`SITE.counter`, 키 `sangsik-total`, `sangsik-d-YYYYMMDD`). 브라우저당 하루 1회(localStorage) 센다. 불러오지 못하면 패널이 숨는다.
+- 유입 경로: 그날 처음 세는 방문 때 직전 주소(referrer)와 앱 표시(user agent)로 경로(google·naver·daum·bing·search·ai·kakao·sns·root·other·direct)를 나눠 `sangsik-src-<경로>`(누적), `sangsik-sm-YYYYMM-<경로>`(월), `sangsik-sd-YYYYMMDD-<경로>`(일)를 센다. 2026.09.30 부터 집계.
+- 글 조회수: 같은 브라우저에서 같은 글은 하루 한 번 `sangsik-p-<id>` 를 센다. 글 머리와 첫 화면 목록(보이는 10개만 읽기)에 표시.
+- 방문 통계 페이지: https://sogood5925-gif.github.io/sangsik/stats/ (검색 제외·메뉴에 없음). 방문자, 기간별 유입 경로 막대, 글별 조회수 순위, '내 방문 빼기'(localStorage `sangsik-me`=1 이면 세지 않고 읽기만).
+  경로 이름을 바꾸거나 더하면 `src/site.js` 의 `source()` 와 `src/stats.js` 의 `SRC` 를 함께 고친다.
 - 댓글과 카운터는 `src/shell.html` 의 `SITE` 설정을 쓰고 `*.github.io` 에서만 켜진다. 아티팩트에서는 CSP 때문에 외부 스크립트가 막혀 댓글 자리에 공개 사이트 링크만 보인다.
 
 ## 구조
 - `posts/<id>.html` — 글 한 편. `<template>` 한 개로 감싼다.
 - `posts/order.txt` — 글 순서(오래된 글이 위). 새 글은 맨 아래에 추가.
 - 공개 사이트는 글마다 개별 주소를 갖는 여러 페이지다: `https://sogood5925-gif.github.io/sangsik/<id>/`.
-  - `src/page.html` — 페이지 틀, `src/site.js` — 공개 사이트 스크립트(목록 거르기·검색·방문자 수·댓글·공감).
+  - `src/page.html` — 페이지 틀, `src/site.js` — 공개 사이트 스크립트(목록 거르기·검색·쪽 번호 10개 묶음·방문자 수·유입 경로·조회수·댓글·공감).
+  - `src/stats.js` — 방문 통계 페이지 스크립트. 빌드가 `stats/index.html` 로 만든다(`stats` 는 글 id 로 쓸 수 없다).
   - CSS 는 `src/shell.html` 의 `<style>` 을 함께 쓴다. 한 곳만 고치면 두 쪽에 반영된다.
 - `src/shell.html` — 아티팩트용 한 파일짜리 블로그(해시 주소). `<!-- POSTS -->` 자리에 글이 들어간다.
 - `python3 build.py` — 검사 후 다음을 만든다. 모두 생성물이므로 손으로 고치지 않는다.

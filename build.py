@@ -82,7 +82,7 @@ def main():
 SITE = 'https://sogood5925-gif.github.io/sangsik/'
 CAT = {'life': '생활정보', 'dis': '질병', 'nut': '영양소', 'hea': '건강상식'}
 ORDER = ['life', 'dis', 'nut', 'hea']
-KEEP = {'posts', 'src', '.build', '.git', '__pycache__'}
+KEEP = {'posts', 'src', '.build', '.git', '__pycache__', 'stats'}   # stats: 방문 통계 페이지(빌드가 만들지만 글이 아니에요)
 E = lambda t: html.escape(t, quote=True)
 
 def parse(src):
@@ -152,7 +152,7 @@ def home_main(posts):
         f'<li data-id="{p["id"]}" data-cat="{p["cat"]}"><a class="item" href="{p["id"]}/">'
         f'<div class="item-text"><span class="item-cat k-{p["cat"]}">{CAT[p["cat"]]}</span>'
         f'<span class="item-title">{E(p["title"])}</span><span class="item-sum">{E(p["sum"])}</span>'
-        f'<span class="item-meta">{p["date"]} · 읽는 데 약 {p["min"]}분</span></div>{thumb(p)}</a></li>\n'
+        f'<span class="item-meta">{p["date"]} · 읽는 데 약 {p["min"]}분<span class="item-views" hidden></span></span></div>{thumb(p)}</a></li>\n'
         for p in posts)
     return (f'<div class="listhead"><h2 id="listtitle">전체글</h2><span id="listcount">{len(posts)}개의 글</span></div>\n'
             f'<ul class="postlist" id="postlist">\n{items}</ul>\n'
@@ -182,7 +182,7 @@ def post_main(p, posts):
     return f"""<article class="post">
 <a class="crumb k-{p['cat']}" href="../#cat-{p['cat']}">{CAT[p['cat']]}</a>
 <h1 class="post-title">{E(p['title'])}</h1>
-<div class="byline"><b>상식첩 편집실</b><span><time datetime="{p['iso']}">{p['date']}</time></span><span>읽는 데 약 {p['min']}분</span></div>
+<div class="byline"><b>상식첩 편집실</b><span><time datetime="{p['iso']}">{p['date']}</time></span><span>읽는 데 약 {p['min']}분</span><span class="views" id="views" data-id="{p['id']}" hidden>조회 <b id="vcount">-</b></span></div>
 <nav class="toc" aria-label="목차"><p>목차</p><ol>{toc}</ol></nav>
 <div class="body">
 {body}
@@ -195,6 +195,45 @@ def post_main(p, posts):
 <div id="cbox" data-term="post-{p['id']}"></div></section>
 <section class="related"><h3>‘{CAT[p['cat']]}’ 카테고리의 다른 글</h3><ul>{rel}</ul></section>
 <nav class="pn" aria-label="이전 글과 다음 글">{pn(i + 1, '이전 글')}{pn(i - 1, '다음 글')}</nav>"""
+
+def stats_main(plist):
+    seg = lambda gid, label, items: (f'<div class="seg" id="{gid}" role="group" aria-label="{label}">' +
+                                     ''.join(f'<button type="button" data-k="{k}">{v}</button>' for k, v in items) + '</div>')
+    periods = [('today', '오늘'), ('yday', '어제'), ('month', '이번 달'), ('lmonth', '지난 달'), ('total', '누적')]
+    cats = [('all', '전체')] + [(c, CAT[c]) for c in ORDER]
+    return f"""<div class="listhead"><h2>방문 통계</h2><span>한국 시간 기준</span></div>
+<div class="stats">
+<p class="st-off" id="st-off" hidden>통계는 공개 사이트(sogood5925-gif.github.io/sangsik)에서만 불러올 수 있어요.</p>
+<section><h3>방문자</h3>
+<div class="tiles"><div><span>오늘</span><b id="s-today">-</b></div><div><span>어제</span><b id="s-yday">-</b></div><div><span>누적</span><b id="s-total">-</b></div></div>
+</section>
+<section><h3>어디서 들어왔을까</h3>
+{seg('src-p', '기간', periods)}
+<p class="st-sum" id="src-sum" aria-live="polite"></p>
+<ol class="bars" id="src-bars"></ol>
+<p class="st-help">방문자가 그날 처음 연 페이지의 직전 주소로 나눠요. 카카오톡·네이버 앱처럼 앱 안에서 연 경우는 앱 표시로 구별해요.
+직전 주소를 보내지 않는 앱이나 주소를 직접 입력·즐겨찾기로 들어온 경우는 ‘직접 방문’으로 세요. 검색어는 알 수 없어요.</p>
+</section>
+<section><h3>글별 조회수</h3>
+{seg('pv-cat', '카테고리', cats)}
+<p class="st-sum" id="pv-state" aria-live="polite"></p>
+<div class="tbl"><table class="pvt"><thead><tr><th class="num">순위</th><th>글</th><th class="num">조회</th></tr></thead><tbody id="pv-body"></tbody></table></div>
+<p class="st-more"><button type="button" id="pv-more" hidden>더 보기</button></p>
+<p class="st-help">같은 브라우저에서 같은 글은 하루에 한 번만 세요.</p>
+</section>
+<section><h3>검색어 확인</h3>
+<p>어떤 검색어로 들어왔는지는 검색엔진이 알려 줘요.</p>
+<ul class="st-links">
+<li><a href="https://search.google.com/search-console/performance/search-analytics?resource_id=https%3A%2F%2Fsogood5925-gif.github.io%2Fsangsik%2F" target="_blank" rel="noopener">구글 서치 콘솔 → 실적(검색어·클릭 수)</a></li>
+<li><a href="https://searchadvisor.naver.com/console/board" target="_blank" rel="noopener">네이버 서치어드바이저 → 리포트(검색 유입)</a></li>
+</ul>
+</section>
+<section><h3>내 방문 빼기</h3>
+<p id="me-note"></p>
+<button type="button" class="me-btn" id="me-btn"></button>
+</section>
+</div>
+<script type="application/json" id="plist">{plist}</script>"""
 
 def build_site(order, chunks, css):
     tpl = open(os.path.join(ROOT, 'src/page.html'), encoding='utf-8').read()
@@ -241,6 +280,14 @@ def build_site(order, chunks, css):
            MAIN=('<div class="listhead"><h2>페이지를 찾을 수 없어요</h2></div>'
                  '<p class="nohit">주소가 바뀌었거나 없는 글이에요. <a href="/sangsik/">첫 화면</a>에서 찾아보세요.</p>'),
            SIDE=side(posts, '/sangsik/', None), **common)
+    # 방문 통계: 검색에 노출하지 않고 메뉴에도 넣지 않는 주인용 페이지. 스크립트는 src/stats.js
+    plist = json.dumps([{'id': p['id'], 't': p['title'], 'c': p['cat']} for p in posts],
+                       ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
+    render('stats/index.html', TITLE='방문 통계 | 생활 상식첩', DESC='생활 상식첩 방문 통계', URL=SITE + 'stats/',
+           OGTYPE='website', OGTITLE='방문 통계', ROOT='../', HEAD='<meta name="robots" content="noindex,nofollow">\n',
+           BLOGNAME='<p class="blogname"><a href="../">생활 상식첩</a></p>', MENU=menu(posts, '../', None),
+           MAIN=stats_main(plist), SIDE=side(posts, '../', None), CSS=css,
+           JS=open(os.path.join(ROOT, 'src/stats.js'), encoding='utf-8').read().strip())
     # 지난 빌드에서 만들었지만 지금은 없는 글 폴더를 지운다
     for d in os.listdir(ROOT):
         f = os.path.join(ROOT, d, 'index.html')

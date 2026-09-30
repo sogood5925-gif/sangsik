@@ -12,17 +12,51 @@
   var old=location.hash.match(/^#post-([a-z0-9-]+)$/);
   if(old && $('postlist') && $('postlist').querySelector('[data-id="'+old[1]+'"]')){location.replace(old[1]+'/');return;}
 
-  /* 방문자 수: 한 브라우저는 하루에 한 번만 세요(한국 시간 기준). 불러오지 못하면 칸을 숨겨요 */
+  /* 방문자 수: 한 브라우저는 하루에 한 번만 세요(한국 시간 기준). 불러오지 못하면 칸을 숨겨요.
+     통계 페이지(stats/)에서 '내 방문 빼기'를 켠 브라우저는 세지 않고 읽기만 해요 */
+  var day=new Date(Date.now()+9*36e5).toISOString().slice(0,10).replace(/-/g,'');
+  var ME=get('sangsik-me')==='1';
+  function cnt(verb,k){return fetch(SITE.counter+verb+'/'+SITE.counterNs+'/sangsik-'+k)
+    .then(function(r){if(r.status===404)return 0; if(!r.ok)throw r.status; return r.json().then(function(j){return j.value;});});}
+  function fmt(v){return Number(v).toLocaleString('ko-KR');}
+  /* 들어온 경로: 이전 페이지 주소(referrer)와 앱 안 브라우저 표시(user agent)로 나눠요. stats/ 의 목록과 이름이 같아야 해요 */
+  function source(){
+    var ua=navigator.userAgent||'', h='', path='';
+    try{var u=new URL(document.referrer);h=u.hostname.toLowerCase();path=u.pathname;}catch(e){}
+    var is=function(re){return re.test(h);};
+    if(h===location.hostname) return path.indexOf('/sangsik/')===0?'direct':'root';
+    if(/KAKAOTALK/i.test(ua)||is(/(^|\.)kakao\.com$/)) return 'kakao';
+    if(is(/(^|\.)(chatgpt\.com|openai\.com|perplexity\.ai|claude\.ai|copilot\.microsoft\.com|gemini\.google\.com|wrtn\.ai)$/)) return 'ai';
+    if(is(/(^|\.)google\.[a-z.]+$/)) return 'google';
+    if(is(/(^|\.)naver\.(com|net)$/)||/NAVER\(inapp/i.test(ua)) return 'naver';
+    if(is(/(^|\.)daum\.net$/)) return 'daum';
+    if(is(/(^|\.)bing\.com$/)) return 'bing';
+    if(is(/(^|\.)(zum\.com|duckduckgo\.com|yahoo\.[a-z.]+|ecosia\.org|baidu\.com|yandex\.[a-z.]+)$/)) return 'search';
+    if(/FBAN|FBAV|Instagram|Line\/|BAND\//.test(ua)||is(/(^|\.)(facebook\.com|instagram\.com|t\.co|twitter\.com|x\.com|threads\.net|band\.us|youtube\.com|reddit\.com|tiktok\.com|dcinside\.com|clien\.net|theqoo\.net|fmkorea\.com)$/)) return 'sns';
+    return h?'other':'direct';
+  }
   if(ON_SITE){
-    var day=new Date(Date.now()+9*36e5).toISOString().slice(0,10).replace(/-/g,'');
-    var verb=get('sangsik-visit')===day?'get':'hit';
-    var num=function(k){return fetch(SITE.counter+verb+'/'+SITE.counterNs+'/sangsik-'+k)
-      .then(function(r){if(r.status===404)return 0; if(!r.ok)throw r.status; return r.json().then(function(j){return j.value;});});};
-    Promise.all([num('d-'+day),num('total')]).then(function(v){
-      $('v-today').textContent=Number(v[0]).toLocaleString('ko-KR');
-      $('v-total').textContent=Number(v[1]).toLocaleString('ko-KR');
+    var fresh=!ME && get('sangsik-visit')!==day;
+    var verb=fresh?'hit':'get';
+    Promise.all([cnt(verb,'d-'+day),cnt(verb,'total')]).then(function(v){
+      $('v-today').textContent=fmt(v[0]);
+      $('v-total').textContent=fmt(v[1]);
       $('visits').hidden=false;
-      put('sangsik-visit',day);
+      if(fresh) put('sangsik-visit',day);
+    }).catch(function(){});
+    if(fresh){var src=source();
+      ['src-'+src,'sm-'+day.slice(0,6)+'-'+src,'sd-'+day+'-'+src].forEach(function(k){cnt('hit',k).catch(function(){});});}
+  }
+
+  /* 글 조회수: 한 브라우저에서 같은 글은 하루에 한 번만 세요 */
+  var vw=$('views');
+  if(vw && ON_SITE){
+    var seen={}; try{seen=JSON.parse(get('sangsik-pv')||'{}');}catch(e){}
+    if(seen.d!==day||!Array.isArray(seen.ids)) seen={d:day,ids:[]};
+    var vid=vw.dataset.id, vhit=!ME && seen.ids.indexOf(vid)<0;
+    cnt(vhit?'hit':'get','p-'+vid).then(function(v){
+      $('vcount').textContent=fmt(v);vw.hidden=false;
+      if(vhit){seen.ids.push(vid);put('sangsik-pv',JSON.stringify(seen));}
     }).catch(function(){});
   }
 
@@ -52,10 +86,34 @@
     var pages=Math.ceil(list.length/PER); page=Math.min(page,Math.max(pages,1));
     items.forEach(function(li){li.hidden=true;});
     list.slice((page-1)*PER,page*PER).forEach(function(li){li.hidden=false;});
-    var pg=$('pager'); pg.innerHTML=''; pg.hidden=pages<2;
-    for(var i=1;i<=pages;i++)(function(n){var b=document.createElement('button');b.type='button';b.textContent=n;
-      if(n===page)b.setAttribute('aria-current','page');
-      b.addEventListener('click',function(){page=n;show(list,title);$('main').scrollIntoView({block:'start'});});pg.appendChild(b);})(i);
+    pager($('pager'),pages,page,function(n){page=n;show(list,title);$('main').scrollIntoView({block:'start'});});
+    views(list.slice((page-1)*PER,page*PER));
+  }
+  /* 쪽 번호는 10개씩 묶어 보여 주고, 화살표로 앞뒤 묶음(처음·마지막)으로 옮겨 가요 */
+  function pager(pg,pages,page,go){
+    pg.innerHTML=''; pg.hidden=pages<2; if(pages<2) return;
+    var G=10, s=Math.floor((page-1)/G)*G+1, e=Math.min(s+G-1,pages);
+    function b(text,n,label,cur){var x=document.createElement('button');x.type='button';x.textContent=text;
+      if(label){x.setAttribute('aria-label',label);x.className='arw';}
+      if(n===null) x.disabled=true; else x.addEventListener('click',function(){go(n);});
+      if(cur) x.setAttribute('aria-current','page');
+      pg.appendChild(x);}
+    if(pages>G){b('«',s>1?1:null,'첫 쪽');b('‹',s>1?s-1:null,'이전 10쪽');}
+    for(var i=s;i<=e;i++) b(String(i),i,null,i===page);
+    if(pages>G){b('›',e<pages?e+1:null,'다음 10쪽');b('»',e<pages?pages:null,'마지막 쪽');}
+  }
+  /* 목록에 보이는 글의 조회수를 불러와요(한 번 불러온 값은 다시 쓰고, 세지는 않아요) */
+  var VW={};
+  function views(lis){
+    if(!ON_SITE) return;
+    lis.forEach(function(li){
+      var id=li.dataset.id, sp=li.querySelector('.item-views');
+      var fill=function(v){sp.textContent=' · 조회 '+fmt(v);sp.hidden=false;};
+      if(!sp) return;
+      if(id in VW){if(VW[id]!==null) fill(VW[id]); return;}
+      VW[id]=null;
+      cnt('get','p-'+id).then(function(v){VW[id]=v;fill(v);}).catch(function(){delete VW[id];});
+    });
   }
   function loadHay(){
     if(hay) return Promise.resolve(hay);

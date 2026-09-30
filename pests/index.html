@@ -22,7 +22,7 @@
 /* 레이아웃: 블로그 머리(제목·메뉴) 아래, 넓은 화면은 본문 + 오른쪽 사이드바, 좁은 화면은 한 줄로 쌓기 */
 :root{
   --bg:#F2F4F1; --paper:#FFFFFF; --ink:#1D2320; --ink-2:#56605B; --ink-3:#88918C; --line:#E2E6E3;
-  --accent:#1F8A5B; --accent-soft:#E5F3EB; --on-accent:#FFFFFF;
+  --accent:#1F8A5B; --accent-soft:#E5F3EB; --on-accent:#FFFFFF; --bar:#1F8A5B;
   --note-bg:#FFF8E0; --note-line:#E3BE52; --warn-bg:#FCEBEA; --warn-line:#D2544F;
   --c-life:#2F7D6B; --c-dis:#B0513A; --c-nut:#B7831A; --c-hea:#3A58A4; --on-thumb:#FFFFFF;
   --k-life:#2F7D6B; --k-dis:#B0513A; --k-nut:#9A6C0F; --k-hea:#3A58A4;
@@ -32,7 +32,7 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#101412; --paper:#171C1A; --ink:#E5EAE7; --ink-2:#A8B2AD; --ink-3:#7B8580; --line:#29312D;
-  --accent:#55C291; --accent-soft:#1B2D24; --on-accent:#0C1611;
+  --accent:#55C291; --accent-soft:#1B2D24; --on-accent:#0C1611; --bar:#3FA87A;
   --note-bg:#2A2514; --note-line:#8D7732; --warn-bg:#2E1B1A; --warn-line:#C2625D;
   --c-life:#276A5B; --c-dis:#94452F; --c-nut:#936914; --c-hea:#314B8C; --on-thumb:#F4F6F5;
   --k-life:#6FC3AE; --k-dis:#E8907A; --k-nut:#E0B452; --k-hea:#93AAEA;
@@ -40,7 +40,7 @@
 }}
 :root[data-theme="dark"]{
   --bg:#101412; --paper:#171C1A; --ink:#E5EAE7; --ink-2:#A8B2AD; --ink-3:#7B8580; --line:#29312D;
-  --accent:#55C291; --accent-soft:#1B2D24; --on-accent:#0C1611;
+  --accent:#55C291; --accent-soft:#1B2D24; --on-accent:#0C1611; --bar:#3FA87A;
   --note-bg:#2A2514; --note-line:#8D7732; --warn-bg:#2E1B1A; --warn-line:#C2625D;
   --c-life:#276A5B; --c-dis:#94452F; --c-nut:#936914; --c-hea:#314B8C; --on-thumb:#F4F6F5;
   --k-life:#6FC3AE; --k-dis:#E8907A; --k-nut:#E0B452; --k-hea:#93AAEA;
@@ -178,6 +178,40 @@ button{font:inherit;color:inherit}
 .pager button{min-width:34px;background:none;border:1px solid transparent;border-radius:4px;padding:4px 8px;cursor:pointer;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .pager button:hover{border-color:var(--line)}
 .pager button[aria-current="page"]{border-color:var(--accent);color:var(--accent);font-weight:800}
+.pager button:disabled{opacity:.35;cursor:default;border-color:transparent}
+.pager .arw{color:var(--ink-3)}
+@media (max-width:480px){.pager{gap:2px;padding:14px 6px}.pager button{min-width:26px;padding:4px 3px;font-size:.88rem}}
+/* 방문 통계 페이지(stats/) */
+.stats{padding:6px 20px 20px}
+.stats section{padding:18px 0;border-bottom:1px solid var(--line)}
+.stats section:last-child{border-bottom:0}
+.stats h3{margin:0 0 12px;font-size:1.05rem}
+.st-off{margin:16px 0 0;padding:12px 14px;background:var(--note-bg);border-left:3px solid var(--note-line);font-size:.92rem}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tiles div{border:1px solid var(--line);border-radius:4px;padding:12px 14px}
+.tiles span{display:block;font-size:.82rem;color:var(--ink-3)}
+.tiles b{font-size:1.5rem;font-variant-numeric:tabular-nums}
+.seg{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.seg button,.me-btn,.st-more button{background:none;border:1px solid var(--line);border-radius:4px;padding:5px 10px;cursor:pointer;color:var(--ink-2);font:inherit;font-size:.88rem}
+.seg button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:800}
+.st-sum{margin:0 0 10px;font-size:.88rem;color:var(--ink-2)}
+.st-help{margin:12px 0 0;font-size:.82rem;color:var(--ink-3);line-height:1.7}
+.bars{list-style:none;margin:0;padding:0}
+.bars li{display:grid;grid-template-columns:minmax(7em,11em) minmax(0,1fr) auto;align-items:center;gap:10px;padding:5px 0;font-size:.9rem}
+.bars .b-track{height:14px}
+.bars .b-bar{display:block;height:100%;min-width:0;background:var(--bar);border-radius:0 4px 4px 0}
+.bars .b-val{font-variant-numeric:tabular-nums;color:var(--ink-2);font-size:.85rem;text-align:right}
+.bars .zero .b-label,.bars .zero .b-val{color:var(--ink-3)}
+@media (max-width:480px){.bars li{grid-template-columns:1fr auto;row-gap:4px}.bars .b-track{grid-column:1/-1;grid-row:2}}
+.stats .tbl{margin:0}
+.stats .tbl table{min-width:0}
+.pvt td.num,.pvt th.num{white-space:nowrap}
+.pvt td a{color:var(--ink);text-decoration:none}
+.pvt td a:hover{text-decoration:underline}
+.pvt .item-cat{margin-right:6px}
+.st-more{text-align:center;margin:10px 0 0}
+.st-links{margin:0;padding-left:1.2em;line-height:1.9}
+.views b{font-weight:400;font-variant-numeric:tabular-nums}
 .nohit{padding:40px 20px;text-align:center;color:var(--ink-3);margin:0}
 .comments{border-top:1px solid var(--line);padding:22px clamp(18px,4vw,48px) 26px}
 .comments h3{margin:0 0 4px;font-size:1rem}
@@ -209,7 +243,7 @@ button{font:inherit;color:inherit}
 <article class="post">
 <a class="crumb k-life" href="../#cat-life">생활정보</a>
 <h1 class="post-title">집 안 해충 대처: 바퀴벌레·빈대·초파리, 약보다 먼저 할 것</h1>
-<div class="byline"><b>상식첩 편집실</b><span><time datetime="2026-09-30">2026.09.30</time></span><span>읽는 데 약 4분</span></div>
+<div class="byline"><b>상식첩 편집실</b><span><time datetime="2026-09-30">2026.09.30</time></span><span>읽는 데 약 4분</span><span class="views" id="views" data-id="pests" hidden>조회 <b id="vcount">-</b></span></div>
 <nav class="toc" aria-label="목차"><p>목차</p><ol><li><a href="#sec1">해충별 특징과 흔적</a></li><li><a href="#sec2">바퀴벌레</a></li><li><a href="#sec3">빈대</a></li><li><a href="#sec4">초파리와 나방파리</a></li><li><a href="#sec5">개미</a></li><li><a href="#sec6">살충제 안전하게 쓰기</a></li><li><a href="#sec7">업체를 불러야 할 때</a></li><li><a href="#sec8">자주 묻는 질문</a></li><li><a href="#sec9">참고 자료</a></li></ol></nav>
 <div class="body">
 <p class="lead">해충이 보이면 먼저 스프레이를 찾게 되지요. 그런데 눈에 보이는 한 마리 뒤에는 숨어 있는 수십 마리가 있어요. 해충은 <strong>먹이, 물, 숨을 곳</strong>이 있는 곳에서 늘어나요. 이 셋을 줄이는 것이 약보다 오래가요.</p>
@@ -379,17 +413,51 @@ button{font:inherit;color:inherit}
   var old=location.hash.match(/^#post-([a-z0-9-]+)$/);
   if(old && $('postlist') && $('postlist').querySelector('[data-id="'+old[1]+'"]')){location.replace(old[1]+'/');return;}
 
-  /* 방문자 수: 한 브라우저는 하루에 한 번만 세요(한국 시간 기준). 불러오지 못하면 칸을 숨겨요 */
+  /* 방문자 수: 한 브라우저는 하루에 한 번만 세요(한국 시간 기준). 불러오지 못하면 칸을 숨겨요.
+     통계 페이지(stats/)에서 '내 방문 빼기'를 켠 브라우저는 세지 않고 읽기만 해요 */
+  var day=new Date(Date.now()+9*36e5).toISOString().slice(0,10).replace(/-/g,'');
+  var ME=get('sangsik-me')==='1';
+  function cnt(verb,k){return fetch(SITE.counter+verb+'/'+SITE.counterNs+'/sangsik-'+k)
+    .then(function(r){if(r.status===404)return 0; if(!r.ok)throw r.status; return r.json().then(function(j){return j.value;});});}
+  function fmt(v){return Number(v).toLocaleString('ko-KR');}
+  /* 들어온 경로: 이전 페이지 주소(referrer)와 앱 안 브라우저 표시(user agent)로 나눠요. stats/ 의 목록과 이름이 같아야 해요 */
+  function source(){
+    var ua=navigator.userAgent||'', h='', path='';
+    try{var u=new URL(document.referrer);h=u.hostname.toLowerCase();path=u.pathname;}catch(e){}
+    var is=function(re){return re.test(h);};
+    if(h===location.hostname) return path.indexOf('/sangsik/')===0?'direct':'root';
+    if(/KAKAOTALK/i.test(ua)||is(/(^|\.)kakao\.com$/)) return 'kakao';
+    if(is(/(^|\.)(chatgpt\.com|openai\.com|perplexity\.ai|claude\.ai|copilot\.microsoft\.com|gemini\.google\.com|wrtn\.ai)$/)) return 'ai';
+    if(is(/(^|\.)google\.[a-z.]+$/)) return 'google';
+    if(is(/(^|\.)naver\.(com|net)$/)||/NAVER\(inapp/i.test(ua)) return 'naver';
+    if(is(/(^|\.)daum\.net$/)) return 'daum';
+    if(is(/(^|\.)bing\.com$/)) return 'bing';
+    if(is(/(^|\.)(zum\.com|duckduckgo\.com|yahoo\.[a-z.]+|ecosia\.org|baidu\.com|yandex\.[a-z.]+)$/)) return 'search';
+    if(/FBAN|FBAV|Instagram|Line\/|BAND\//.test(ua)||is(/(^|\.)(facebook\.com|instagram\.com|t\.co|twitter\.com|x\.com|threads\.net|band\.us|youtube\.com|reddit\.com|tiktok\.com|dcinside\.com|clien\.net|theqoo\.net|fmkorea\.com)$/)) return 'sns';
+    return h?'other':'direct';
+  }
   if(ON_SITE){
-    var day=new Date(Date.now()+9*36e5).toISOString().slice(0,10).replace(/-/g,'');
-    var verb=get('sangsik-visit')===day?'get':'hit';
-    var num=function(k){return fetch(SITE.counter+verb+'/'+SITE.counterNs+'/sangsik-'+k)
-      .then(function(r){if(r.status===404)return 0; if(!r.ok)throw r.status; return r.json().then(function(j){return j.value;});});};
-    Promise.all([num('d-'+day),num('total')]).then(function(v){
-      $('v-today').textContent=Number(v[0]).toLocaleString('ko-KR');
-      $('v-total').textContent=Number(v[1]).toLocaleString('ko-KR');
+    var fresh=!ME && get('sangsik-visit')!==day;
+    var verb=fresh?'hit':'get';
+    Promise.all([cnt(verb,'d-'+day),cnt(verb,'total')]).then(function(v){
+      $('v-today').textContent=fmt(v[0]);
+      $('v-total').textContent=fmt(v[1]);
       $('visits').hidden=false;
-      put('sangsik-visit',day);
+      if(fresh) put('sangsik-visit',day);
+    }).catch(function(){});
+    if(fresh){var src=source();
+      ['src-'+src,'sm-'+day.slice(0,6)+'-'+src,'sd-'+day+'-'+src].forEach(function(k){cnt('hit',k).catch(function(){});});}
+  }
+
+  /* 글 조회수: 한 브라우저에서 같은 글은 하루에 한 번만 세요 */
+  var vw=$('views');
+  if(vw && ON_SITE){
+    var seen={}; try{seen=JSON.parse(get('sangsik-pv')||'{}');}catch(e){}
+    if(seen.d!==day||!Array.isArray(seen.ids)) seen={d:day,ids:[]};
+    var vid=vw.dataset.id, vhit=!ME && seen.ids.indexOf(vid)<0;
+    cnt(vhit?'hit':'get','p-'+vid).then(function(v){
+      $('vcount').textContent=fmt(v);vw.hidden=false;
+      if(vhit){seen.ids.push(vid);put('sangsik-pv',JSON.stringify(seen));}
     }).catch(function(){});
   }
 
@@ -419,10 +487,34 @@ button{font:inherit;color:inherit}
     var pages=Math.ceil(list.length/PER); page=Math.min(page,Math.max(pages,1));
     items.forEach(function(li){li.hidden=true;});
     list.slice((page-1)*PER,page*PER).forEach(function(li){li.hidden=false;});
-    var pg=$('pager'); pg.innerHTML=''; pg.hidden=pages<2;
-    for(var i=1;i<=pages;i++)(function(n){var b=document.createElement('button');b.type='button';b.textContent=n;
-      if(n===page)b.setAttribute('aria-current','page');
-      b.addEventListener('click',function(){page=n;show(list,title);$('main').scrollIntoView({block:'start'});});pg.appendChild(b);})(i);
+    pager($('pager'),pages,page,function(n){page=n;show(list,title);$('main').scrollIntoView({block:'start'});});
+    views(list.slice((page-1)*PER,page*PER));
+  }
+  /* 쪽 번호는 10개씩 묶어 보여 주고, 화살표로 앞뒤 묶음(처음·마지막)으로 옮겨 가요 */
+  function pager(pg,pages,page,go){
+    pg.innerHTML=''; pg.hidden=pages<2; if(pages<2) return;
+    var G=10, s=Math.floor((page-1)/G)*G+1, e=Math.min(s+G-1,pages);
+    function b(text,n,label,cur){var x=document.createElement('button');x.type='button';x.textContent=text;
+      if(label){x.setAttribute('aria-label',label);x.className='arw';}
+      if(n===null) x.disabled=true; else x.addEventListener('click',function(){go(n);});
+      if(cur) x.setAttribute('aria-current','page');
+      pg.appendChild(x);}
+    if(pages>G){b('«',s>1?1:null,'첫 쪽');b('‹',s>1?s-1:null,'이전 10쪽');}
+    for(var i=s;i<=e;i++) b(String(i),i,null,i===page);
+    if(pages>G){b('›',e<pages?e+1:null,'다음 10쪽');b('»',e<pages?pages:null,'마지막 쪽');}
+  }
+  /* 목록에 보이는 글의 조회수를 불러와요(한 번 불러온 값은 다시 쓰고, 세지는 않아요) */
+  var VW={};
+  function views(lis){
+    if(!ON_SITE) return;
+    lis.forEach(function(li){
+      var id=li.dataset.id, sp=li.querySelector('.item-views');
+      var fill=function(v){sp.textContent=' · 조회 '+fmt(v);sp.hidden=false;};
+      if(!sp) return;
+      if(id in VW){if(VW[id]!==null) fill(VW[id]); return;}
+      VW[id]=null;
+      cnt('get','p-'+id).then(function(v){VW[id]=v;fill(v);}).catch(function(){delete VW[id];});
+    });
   }
   function loadHay(){
     if(hay) return Promise.resolve(hay);

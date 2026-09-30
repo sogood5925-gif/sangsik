@@ -15,7 +15,7 @@
 /* 레이아웃: 블로그 머리(제목·메뉴) 아래, 넓은 화면은 본문 + 오른쪽 사이드바, 좁은 화면은 한 줄로 쌓기 */
 :root{
   --bg:#F2F4F1; --paper:#FFFFFF; --ink:#1D2320; --ink-2:#56605B; --ink-3:#88918C; --line:#E2E6E3;
-  --accent:#1F8A5B; --accent-soft:#E5F3EB; --on-accent:#FFFFFF;
+  --accent:#1F8A5B; --accent-soft:#E5F3EB; --on-accent:#FFFFFF; --bar:#1F8A5B;
   --note-bg:#FFF8E0; --note-line:#E3BE52; --warn-bg:#FCEBEA; --warn-line:#D2544F;
   --c-life:#2F7D6B; --c-dis:#B0513A; --c-nut:#B7831A; --c-hea:#3A58A4; --on-thumb:#FFFFFF;
   --k-life:#2F7D6B; --k-dis:#B0513A; --k-nut:#9A6C0F; --k-hea:#3A58A4;
@@ -25,7 +25,7 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#101412; --paper:#171C1A; --ink:#E5EAE7; --ink-2:#A8B2AD; --ink-3:#7B8580; --line:#29312D;
-  --accent:#55C291; --accent-soft:#1B2D24; --on-accent:#0C1611;
+  --accent:#55C291; --accent-soft:#1B2D24; --on-accent:#0C1611; --bar:#3FA87A;
   --note-bg:#2A2514; --note-line:#8D7732; --warn-bg:#2E1B1A; --warn-line:#C2625D;
   --c-life:#276A5B; --c-dis:#94452F; --c-nut:#936914; --c-hea:#314B8C; --on-thumb:#F4F6F5;
   --k-life:#6FC3AE; --k-dis:#E8907A; --k-nut:#E0B452; --k-hea:#93AAEA;
@@ -33,7 +33,7 @@
 }}
 :root[data-theme="dark"]{
   --bg:#101412; --paper:#171C1A; --ink:#E5EAE7; --ink-2:#A8B2AD; --ink-3:#7B8580; --line:#29312D;
-  --accent:#55C291; --accent-soft:#1B2D24; --on-accent:#0C1611;
+  --accent:#55C291; --accent-soft:#1B2D24; --on-accent:#0C1611; --bar:#3FA87A;
   --note-bg:#2A2514; --note-line:#8D7732; --warn-bg:#2E1B1A; --warn-line:#C2625D;
   --c-life:#276A5B; --c-dis:#94452F; --c-nut:#936914; --c-hea:#314B8C; --on-thumb:#F4F6F5;
   --k-life:#6FC3AE; --k-dis:#E8907A; --k-nut:#E0B452; --k-hea:#93AAEA;
@@ -171,6 +171,40 @@ button{font:inherit;color:inherit}
 .pager button{min-width:34px;background:none;border:1px solid transparent;border-radius:4px;padding:4px 8px;cursor:pointer;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .pager button:hover{border-color:var(--line)}
 .pager button[aria-current="page"]{border-color:var(--accent);color:var(--accent);font-weight:800}
+.pager button:disabled{opacity:.35;cursor:default;border-color:transparent}
+.pager .arw{color:var(--ink-3)}
+@media (max-width:480px){.pager{gap:2px;padding:14px 6px}.pager button{min-width:26px;padding:4px 3px;font-size:.88rem}}
+/* 방문 통계 페이지(stats/) */
+.stats{padding:6px 20px 20px}
+.stats section{padding:18px 0;border-bottom:1px solid var(--line)}
+.stats section:last-child{border-bottom:0}
+.stats h3{margin:0 0 12px;font-size:1.05rem}
+.st-off{margin:16px 0 0;padding:12px 14px;background:var(--note-bg);border-left:3px solid var(--note-line);font-size:.92rem}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tiles div{border:1px solid var(--line);border-radius:4px;padding:12px 14px}
+.tiles span{display:block;font-size:.82rem;color:var(--ink-3)}
+.tiles b{font-size:1.5rem;font-variant-numeric:tabular-nums}
+.seg{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.seg button,.me-btn,.st-more button{background:none;border:1px solid var(--line);border-radius:4px;padding:5px 10px;cursor:pointer;color:var(--ink-2);font:inherit;font-size:.88rem}
+.seg button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:800}
+.st-sum{margin:0 0 10px;font-size:.88rem;color:var(--ink-2)}
+.st-help{margin:12px 0 0;font-size:.82rem;color:var(--ink-3);line-height:1.7}
+.bars{list-style:none;margin:0;padding:0}
+.bars li{display:grid;grid-template-columns:minmax(7em,11em) minmax(0,1fr) auto;align-items:center;gap:10px;padding:5px 0;font-size:.9rem}
+.bars .b-track{height:14px}
+.bars .b-bar{display:block;height:100%;min-width:0;background:var(--bar);border-radius:0 4px 4px 0}
+.bars .b-val{font-variant-numeric:tabular-nums;color:var(--ink-2);font-size:.85rem;text-align:right}
+.bars .zero .b-label,.bars .zero .b-val{color:var(--ink-3)}
+@media (max-width:480px){.bars li{grid-template-columns:1fr auto;row-gap:4px}.bars .b-track{grid-column:1/-1;grid-row:2}}
+.stats .tbl{margin:0}
+.stats .tbl table{min-width:0}
+.pvt td.num,.pvt th.num{white-space:nowrap}
+.pvt td a{color:var(--ink);text-decoration:none}
+.pvt td a:hover{text-decoration:underline}
+.pvt .item-cat{margin-right:6px}
+.st-more{text-align:center;margin:10px 0 0}
+.st-links{margin:0;padding-left:1.2em;line-height:1.9}
+.views b{font-weight:400;font-variant-numeric:tabular-nums}
 .nohit{padding:40px 20px;text-align:center;color:var(--ink-3);margin:0}
 .comments{border-top:1px solid var(--line);padding:22px clamp(18px,4vw,48px) 26px}
 .comments h3{margin:0 0 4px;font-size:1rem}
@@ -345,9 +379,14 @@ button{font:inherit;color:inherit}
       txt.appendChild(el('span','item-meta',p.date+' · 읽는 데 약 '+p.min+'분'));
       b.appendChild(txt);b.appendChild(thumb(p));l.appendChild(b);ul.appendChild(l);});
     main.appendChild(ul);
+    /* 쪽 번호는 10개씩 묶어 보여 주고, 화살표로 앞뒤 묶음(처음·마지막)으로 옮겨 가요 */
     if(pages>1){var pg=el('nav','pager');pg.setAttribute('aria-label','페이지');
-      for(var i=1;i<=pages;i++)(function(n){var b=btn(null,String(n),function(){list(c,items,label,n);main.scrollIntoView({block:'start'});});
-        if(n===page)b.setAttribute('aria-current','page');pg.appendChild(b);})(i);
+      var G=10, s=Math.floor((page-1)/G)*G+1, e=Math.min(s+G-1,pages);
+      var pb=function(text,n,aria,cur){var b=btn(aria?'arw':null,text,function(){list(c,items,label,n);main.scrollIntoView({block:'start'});});
+        if(aria)b.setAttribute('aria-label',aria); if(n===null)b.disabled=true; if(cur)b.setAttribute('aria-current','page');pg.appendChild(b);};
+      if(pages>G){pb('«',s>1?1:null,'첫 쪽');pb('‹',s>1?s-1:null,'이전 10쪽');}
+      for(var i=s;i<=e;i++) pb(String(i),i,null,i===page);
+      if(pages>G){pb('›',e<pages?e+1:null,'다음 10쪽');pb('»',e<pages?pages:null,'마지막 쪽');}
       main.appendChild(pg);}
   }
 
