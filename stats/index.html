@@ -240,7 +240,7 @@ button{font:inherit;color:inherit}
     <main id="main" class="panel">
 <div class="listhead"><h2>방문 통계</h2><span>한국 시간 기준</span></div>
 <div class="stats">
-<p class="st-off" id="st-off" hidden>통계는 공개 사이트(sogood5925-gif.github.io/sangsik)에서만 불러올 수 있어요.</p>
+<p class="st-off" id="st-off" hidden>방문 통계를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.</p>
 <section><h3>방문자</h3>
 <div class="tiles"><div><span>오늘</span><b id="s-today">-</b></div><div><span>어제</span><b id="s-yday">-</b></div><div><span>누적</span><b id="s-total">-</b></div></div>
 </section>
@@ -310,7 +310,7 @@ button{font:inherit;color:inherit}
 (function(){
   /* 방문 통계 페이지(stats/). 카운터 주소와 키 이름은 src/site.js 와 같아야 해요 */
   var SITE={counter:'https://abacus.jasoncameron.dev/', counterNs:'sogood5925-gif.github.io'};
-  var ON_SITE=/(^|\.)github\.io$/.test(location.hostname);
+  var ON_SITE=location.protocol==='http:'||location.protocol==='https:';
   var CAT={life:'생활정보',dis:'질병',nut:'영양소',hea:'건강상식'};
   var SRC=[['google','구글'],['naver','네이버'],['daum','다음'],['bing','빙'],['search','그 밖의 검색엔진'],
     ['ai','AI 서비스(챗GPT 등)'],['kakao','카카오톡'],['sns','SNS·커뮤니티'],['root','내 첫 페이지(github.io)'],
