@@ -94,7 +94,7 @@
     pg.innerHTML=''; pg.hidden=pages<2; if(pages<2) return;
     var G=10, s=Math.floor((page-1)/G)*G+1, e=Math.min(s+G-1,pages);
     function b(text,n,label,cur){var x=document.createElement('button');x.type='button';x.textContent=text;
-      if(label){x.setAttribute('aria-label',label);x.className='arw';}
+      if(label){x.setAttribute('aria-label',label);x.className=/쪽$/.test(label)&&!/10쪽$/.test(label)?'arw end':'arw';}
       if(n===null) x.disabled=true; else x.addEventListener('click',function(){go(n);});
       if(cur) x.setAttribute('aria-current','page');
       pg.appendChild(x);}

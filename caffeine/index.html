@@ -180,7 +180,7 @@ button{font:inherit;color:inherit}
 .pager button[aria-current="page"]{border-color:var(--accent);color:var(--accent);font-weight:800}
 .pager button:disabled{opacity:.35;cursor:default;border-color:transparent}
 .pager .arw{color:var(--ink-3)}
-@media (max-width:480px){.pager{gap:2px;padding:14px 6px}.pager button{min-width:26px;padding:4px 3px;font-size:.88rem}}
+@media (max-width:480px){.pager{gap:2px;padding:14px 4px}.pager button{min-width:26px;padding:4px 2px;font-size:.88rem}.pager .end{display:none}}
 /* 방문 통계 페이지(stats/) */
 .stats{padding:6px 20px 20px}
 .stats section{padding:18px 0;border-bottom:1px solid var(--line)}
@@ -494,7 +494,7 @@ button{font:inherit;color:inherit}
     pg.innerHTML=''; pg.hidden=pages<2; if(pages<2) return;
     var G=10, s=Math.floor((page-1)/G)*G+1, e=Math.min(s+G-1,pages);
     function b(text,n,label,cur){var x=document.createElement('button');x.type='button';x.textContent=text;
-      if(label){x.setAttribute('aria-label',label);x.className='arw';}
+      if(label){x.setAttribute('aria-label',label);x.className=/쪽$/.test(label)&&!/10쪽$/.test(label)?'arw end':'arw';}
       if(n===null) x.disabled=true; else x.addEventListener('click',function(){go(n);});
       if(cur) x.setAttribute('aria-current','page');
       pg.appendChild(x);}

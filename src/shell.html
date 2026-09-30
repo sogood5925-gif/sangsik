@@ -173,7 +173,7 @@ button{font:inherit;color:inherit}
 .pager button[aria-current="page"]{border-color:var(--accent);color:var(--accent);font-weight:800}
 .pager button:disabled{opacity:.35;cursor:default;border-color:transparent}
 .pager .arw{color:var(--ink-3)}
-@media (max-width:480px){.pager{gap:2px;padding:14px 6px}.pager button{min-width:26px;padding:4px 3px;font-size:.88rem}}
+@media (max-width:480px){.pager{gap:2px;padding:14px 4px}.pager button{min-width:26px;padding:4px 2px;font-size:.88rem}.pager .end{display:none}}
 /* 방문 통계 페이지(stats/) */
 .stats{padding:6px 20px 20px}
 .stats section{padding:18px 0;border-bottom:1px solid var(--line)}
@@ -382,7 +382,7 @@ button{font:inherit;color:inherit}
     /* 쪽 번호는 10개씩 묶어 보여 주고, 화살표로 앞뒤 묶음(처음·마지막)으로 옮겨 가요 */
     if(pages>1){var pg=el('nav','pager');pg.setAttribute('aria-label','페이지');
       var G=10, s=Math.floor((page-1)/G)*G+1, e=Math.min(s+G-1,pages);
-      var pb=function(text,n,aria,cur){var b=btn(aria?'arw':null,text,function(){list(c,items,label,n);main.scrollIntoView({block:'start'});});
+      var pb=function(text,n,aria,cur){var b=btn(aria?(/10쪽$/.test(aria)?'arw':'arw end'):null,text,function(){list(c,items,label,n);main.scrollIntoView({block:'start'});});
         if(aria)b.setAttribute('aria-label',aria); if(n===null)b.disabled=true; if(cur)b.setAttribute('aria-current','page');pg.appendChild(b);};
       if(pages>G){pb('«',s>1?1:null,'첫 쪽');pb('‹',s>1?s-1:null,'이전 10쪽');}
       for(var i=s;i<=e;i++) pb(String(i),i,null,i===page);
