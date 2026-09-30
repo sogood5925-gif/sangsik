@@ -396,9 +396,9 @@ button{font:inherit;color:inherit}
 </div>
 <script>
 (function(){
-  /* 공개 사이트 설정: 댓글(utterances, GitHub 이슈)과 방문자 수는 GitHub Pages 에서만 켜요 */
+  /* GitHub Pages와 Vercel 모두에서 댓글과 방문자 수를 사용해요. 통계 데이터 이름은 기존 값과 맞춰 양쪽 방문을 합쳐요. */
   var SITE={url:'https://sogood5925-gif.github.io/sangsik/', repo:'sogood5925-gif/sangsik', counter:'https://abacus.jasoncameron.dev/', counterNs:'sogood5925-gif.github.io'};
-  var ON_SITE=/(^|\.)github\.io$/.test(location.hostname);
+  var ON_SITE=location.protocol==='http:'||location.protocol==='https:';
   var CAT={life:'생활정보',dis:'질병',nut:'영양소',hea:'건강상식'}, PER=10;
   function $(id){return document.getElementById(id);}
   function get(k){try{return localStorage.getItem(k)}catch(e){return null}}

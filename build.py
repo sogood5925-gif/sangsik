@@ -203,7 +203,7 @@ def stats_main(plist):
     cats = [('all', '전체')] + [(c, CAT[c]) for c in ORDER]
     return f"""<div class="listhead"><h2>방문 통계</h2><span>한국 시간 기준</span></div>
 <div class="stats">
-<p class="st-off" id="st-off" hidden>통계는 공개 사이트(sogood5925-gif.github.io/sangsik)에서만 불러올 수 있어요.</p>
+<p class="st-off" id="st-off" hidden>방문 통계를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.</p>
 <section><h3>방문자</h3>
 <div class="tiles"><div><span>오늘</span><b id="s-today">-</b></div><div><span>어제</span><b id="s-yday">-</b></div><div><span>누적</span><b id="s-total">-</b></div></div>
 </section>

@@ -1,7 +1,7 @@
 (function(){
   /* 방문 통계 페이지(stats/). 카운터 주소와 키 이름은 src/site.js 와 같아야 해요 */
   var SITE={counter:'https://abacus.jasoncameron.dev/', counterNs:'sogood5925-gif.github.io'};
-  var ON_SITE=/(^|\.)github\.io$/.test(location.hostname);
+  var ON_SITE=location.protocol==='http:'||location.protocol==='https:';
   var CAT={life:'생활정보',dis:'질병',nut:'영양소',hea:'건강상식'};
   var SRC=[['google','구글'],['naver','네이버'],['daum','다음'],['bing','빙'],['search','그 밖의 검색엔진'],
     ['ai','AI 서비스(챗GPT 등)'],['kakao','카카오톡'],['sns','SNS·커뮤니티'],['root','내 첫 페이지(github.io)'],
